@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.78.2" />
-  <link rel="canonical" href="/cv-data/">
+  <link rel="canonical" href="/bot-telegram/">
 
   
 
@@ -39,7 +39,7 @@
 
   
   
-  <title>Finding Computer Vision Datasets | Ashish&#39;s blog</title>
+  <title>Deploying your ml model via telegram bot | Ashish&#39;s blog</title>
 </head>
 
   <body>
@@ -246,13 +246,13 @@
       <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
         <use xlink:href="#bookmark"></use>
       </svg>
-      Finding Computer Vision Datasets
+      Deploying your ml model via telegram bot
     </h1>
 
     <div class="date">
       
       
-      <strong>Publish date: </strong>Oct 11, 2019
+      <strong>Publish date: </strong>Nov 27, 2020
       
         
       
@@ -287,8 +287,8 @@
           
           
           
-          <a href="#datasets">
-            Datasets
+          <a href="#intro">
+            Intro
           </a>
         </li>
       
@@ -297,8 +297,38 @@
           
           
           
-          <a href="#resources">
-            Resources
+          <a href="#pre-requisites">
+            Pre-requisites:
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#ml-model">
+            ML model
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#bot-code">
+            Bot Code
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#deploy">
+            Deploy
           </a>
         </li>
       
@@ -308,26 +338,100 @@
 
     
 
-    <p>This article list outs resources to find the trending data-sets in computer vision field useful for beginners and other practitioners.</p>
-<p><img src="https://live.staticflickr.com/65535/49469177806_762f088247_w_d.jpg" alt=""></p>
-<h2 id="datasets"><strong>Datasets</strong></h2>
-<hr>
-<p><a href="https://storage.googleapis.com/openimages/web/index.html">Open Images Dataset</a></p>
-<p><a href="http://cocodataset.org/#home">MS-COCO</a></p>
-<p><a href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR-10</a></p>
-<p><a href="https://github.com/zalandoresearch/fashion-mnist">Fashion MNIST</a></p>
-<p><a href="http://www.image-net.org/">ImageNet</a></p>
-<p><a href="https://www.objects365.org/overview.html">Objects365</a></p>
-<p><a href="http://www.cvlibs.net/datasets/kitti/">KITTI Vision</a></p>
-<h2 id="resources"><strong>Resources</strong></h2>
-<hr>
-<p><a href="https://www.kaggle.com/datasets">Kaggle</a></p>
-<p><a href="https://datasetsearch.research.google.com/">Google Data Search</a></p>
-<p><a href="https://www.visualdata.io/">visualdata.io</a></p>
-<p><a href="http://homepages.inf.ed.ac.uk/rbf/CVonline/Imagedbase.htm">CVonline: Image Databases</a></p>
-<p><a href="https://riemenschneider.hayko.at/vision/dataset/">YACVID</a></p>
-<p><a href="https://computervisiononline.com/datasets">Computer Vision Online</a></p>
-<p><a href="https://www.datasetlist.com/">Datasetlist</a></p>
+    <h2 id="intro">Intro</h2>
+<p>Let me come to the point without any delay. You can serve your model as you think, and there is no set of rules for this. You can deploy through mobile app / web-app, there are plenty of guidance availble in vast internet. Or else you can get to your customers/users through a simple telegram bot. It is simpler than you think. Let&rsquo;s go build it.</p>
+<p align="center"><img src="https://media.giphy.com/media/l4Ki8WjiS8RCQATDi/source.gif" style="zoom:100%;" />
+<h2 id="pre-requisites">Pre-requisites:</h2>
+<ol>
+<li>
+<p>There are plenty of telegram bot wrappers available for python. But mostly one used is <a href="https://github.com/python-telegram-bot/python-telegram-bot">this</a> ❤️.</p>
+</li>
+<li>
+<p>Before going further you will need an <strong>API key</strong> for your bot, get one using <a href="https://t.me/botfather">Botfather 🤖</a>.</p>
+</li>
+<li>
+<p>Hosting service: Heroku, PythonAnyWhere or any of your choose (you get free tiers)</p>
+</li>
+</ol>
+<h2 id="ml-model">ML model</h2>
+<p>Train one or else use pretrained models. It&rsquo;s best practice to quantize your models as we are going to deploy them on heroku free plan service, we get 500mb ram limit and less storage. If the model is in Tensorflow convert it into TFlite (or) If it is in Pytorch, then convert from PyTorch &raquo; ONNX &raquo; Tensorflow &raquo; Tflite.</p>
+<h2 id="bot-code">Bot Code</h2>
+<p>Write your main bot code by taking reference from echo bot examples <a href="https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/echobot.py">here</a>:</p>
+<p>Bot code look like this:</p>
+<pre><code class="language-python">import logging
+import os
+
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from model import get_predictions  # calling model func
+
+# Enable logging
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
+)
+
+logger = logging.getLogger(__name__)
+
+
+# Define a few command handlers. These usually take the two arguments update and
+# context. Error handlers also receive the raised TelegramError object in error.
+def start(update: Update, context: CallbackContext) -&gt; None:
+    &quot;&quot;&quot;Send a message when the command /start is issued.&quot;&quot;&quot;
+    update.message.reply_text('Hi send an image to classify!')
+
+
+def help_command(update: Update, context: CallbackContext) -&gt; None:
+    &quot;&quot;&quot;Send a message when the command /help is issued.&quot;&quot;&quot;
+    update.message.reply_text('Help!')
+
+
+def photo(update: Update, context: CallbackContext) -&gt; int:
+    user = update.message.from_user
+    photo_file = update.message.photo[-1].get_file()
+    photo_file.download('user_photo.jpg')
+    logger.info(&quot;Photo of %s: %s&quot;, user.first_name, 'user_photo.jpg')
+    update.message.reply_text(
+        'Okay now wait a few seconds!!!'
+    )
+    update.message.reply_text(get_prediction('user_photo.jpg'))
+
+
+def main():
+    &quot;&quot;&quot;Start the bot.&quot;&quot;&quot;
+    # Create the Updater and pass it your bot's token.
+    TOKEN = &quot; &quot; # place your token here
+    updater = Updater(TOKEN, use_context=True)
+    PORT = int(os.environ.get('PORT', '8443'))
+
+    # Get the dispatcher to register handlers
+    dispatcher = updater.dispatcher
+
+    # on different commands - answer in Telegram
+    dispatcher.add_handler(CommandHandler(&quot;start&quot;, start))
+    dispatcher.add_handler(CommandHandler(&quot;help&quot;, help_command))
+
+    # on noncommand i.e message - echo the message on Telegram
+    dispatcher.add_handler(MessageHandler(Filters.photo &amp; ~Filters.command, photo))
+
+    updater.start_webhook(listen=&quot;0.0.0.0&quot;,
+                      port=PORT,
+                      url_path=TOKEN)
+    updater.bot.set_webhook(&quot;https://yourapp.herokuapp.com/&quot; + TOKEN)
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<p><code>update.message.reply_text(get_prediction('user_photo.jpg'))</code>  Here I&rsquo;m passing the result predictions to user by calling the model, you can replace it according to your model code.</p>
+<h2 id="deploy">Deploy</h2>
+<p>Prepare requirements file, and Proc file.</p>
+<p>Heroku needs <code>Procfile</code> for running your code.</p>
+<p>look like this:</p>
+<pre><code class="language-reStructuredText">web: python bot.py
+</code></pre>
+<p>Now use heroku-cli to deploy your bot.</p>
+<p>My telegram-bot template <a href="https://github.com/ash11sh/bot">link</a>, Use this for reference.</p>
+
   </main>
   <div id="disqus-container">
   

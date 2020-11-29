@@ -8,6 +8,16 @@
     <language>en-us</language>
     <lastBuildDate>Mon, 26 Jun 2017 18:27:58 +0100</lastBuildDate><atom:link href="https://ash11sh.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Deploying your ml model via telegram bot</title>
+      <link>https://ash11sh.github.io/bot-telegram/</link>
+      <pubDate>Fri, 27 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://ash11sh.github.io/bot-telegram/</guid>
+      <description>Intro Let me come to the point without any delay. You can serve your model as you think, and there is no set of rules for this. You can deploy through mobile app / web-app, there are plenty of guidance availble in vast internet. Or else you can get to your customers/users through a simple telegram bot. It is simpler than you think. Let&amp;rsquo;s go build it.
+Pre-requisites:   There are plenty of telegram bot wrappers available for python.</description>
+    </item>
+    
+    <item>
       <title>Building Image Dataset</title>
       <link>https://ash11sh.github.io/image-dataset/</link>
       <pubDate>Wed, 11 Nov 2020 00:00:00 +0000</pubDate>
@@ -19,6 +29,15 @@
     </item>
     
     <item>
+      <title>Finding Computer Vision Datasets</title>
+      <link>https://ash11sh.github.io/cv-data/</link>
+      <pubDate>Fri, 11 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://ash11sh.github.io/cv-data/</guid>
+      <description>&lt;p&gt;This article list outs resources to find the trending data-sets in computer vision field useful for beginners and other practitioners.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>About</title>
       <link>https://ash11sh.github.io/about/</link>
       <pubDate>Wed, 09 Apr 2014 00:00:00 +0000</pubDate>
@@ -27,15 +46,6 @@
       <description>I&amp;rsquo;m Ashish Veeragoni and this is my blog.
 I set-up this blog after trying various hugo themes, hope this lasts. I&amp;rsquo;m interested and build projects mostly around computer vision. I majored in Mechanical Engineering and begin writing code around my final year ᕙ(`▿´)ᕗ
  ☎️📨 You can find me on linkedin, twitter or telegram</description>
-    </item>
-    
-    <item>
-      <title>Finding Computer Vision Datasets</title>
-      <link>https://ash11sh.github.io/cv-data/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ash11sh.github.io/cv-data/</guid>
-      <description>&lt;p&gt;This article list outs resources to find the trending data-sets in computer vision field useful for beginners and other practitioners.&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -4,7 +4,22 @@
   
   <url>
     <loc>https://ash11sh.github.io/post/</loc>
-    <lastmod>2020-11-11T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ash11sh.github.io/tags/cv/</loc>
+    <lastmod>2020-11-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ash11sh.github.io/bot-telegram/</loc>
+    <lastmod>2020-11-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ash11sh.github.io/tags/</loc>
+    <lastmod>2020-11-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -13,13 +28,8 @@
   </url>
   
   <url>
-    <loc>https://ash11sh.github.io/tags/cv/</loc>
-    <lastmod>2020-11-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ash11sh.github.io/tags/</loc>
-    <lastmod>2020-11-11T00:00:00+00:00</lastmod>
+    <loc>https://ash11sh.github.io/cv-data/</loc>
+    <lastmod>2019-10-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -30,10 +40,6 @@
   <url>
     <loc>https://ash11sh.github.io/about/</loc>
     <lastmod>2014-04-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ash11sh.github.io/cv-data/</loc>
   </url>
   
 </urlset>

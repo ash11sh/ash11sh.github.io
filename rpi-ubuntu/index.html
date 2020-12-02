@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.78.2" />
-  <link rel="canonical" href="/tags/">
+  <link rel="canonical" href="/rpi-ubuntu/">
 
   
 
@@ -39,7 +39,7 @@
 
   
   
-  <title>Tags | Ashish&#39;s blog</title>
+  <title>Installing Ubuntu 20.04 on raspberry pi for Tensorflow | Ashish&#39;s blog</title>
 </head>
 
   <body>
@@ -186,7 +186,7 @@
       
       
       
-      <a href="/post/" >
+      <a href="/post/" aria-current="page">
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use xlink:href="#bookmark"></use>
         </svg>
@@ -199,7 +199,7 @@
       
       
       
-      <a href="/tags/" aria-current="page">
+      <a href="/tags/" >
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use xlink:href="#bookmark"></use>
         </svg>
@@ -242,33 +242,325 @@
         <div>
           
   <main id="main">
-    <h1>Tags</h1>
-    <ul class="patterns-list">
+    <h1>
+      <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
+        <use xlink:href="#bookmark"></use>
+      </svg>
+      Installing Ubuntu 20.04 on raspberry pi for Tensorflow
+    </h1>
+
+    <div class="date">
       
-        <li>
-          <h2>
-            <a href="/tags/cv/">
+      
+      <strong>Publish date: </strong>Dec 2, 2020
+      
+        
+      
+    </div>
+
+    
+      <div class="tags">
+        <strong>Tags: </strong>
+        <ul aria-label="tags">
+          
+            <li>
               <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
                 <use xlink:href="#tag"></use>
               </svg>
-              (3) CV
-            </a>
-          </h2>
+              
+              <a href="/tags/raspberry/">raspberry</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+    
+    
+      
+
+  <nav class="toc" aria-labelledby="toc-heading">
+    <h2 id="toc-heading">Table of contents</h2>
+    <ol>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#why-ubuntu---32-bit-64-bit-">
+            Why Ubuntu - 32 bit/ 64 bit ?
+          </a>
         </li>
       
         <li>
-          <h2>
-            <a href="/tags/raspberry/">
-              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
-                <use xlink:href="#tag"></use>
-              </svg>
-              (1) raspberry
-            </a>
-          </h2>
+          
+          
+          
+          
+          <a href="#headless-installation">
+            Headless installation
+          </a>
         </li>
       
-    </ul>
+        <li>
+          
+          
+          
+          
+          <a href="#desktop-flavour-install">
+            Desktop flavour install
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#overclocking">
+            overclocking
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#memory-swapping">
+            memory swapping
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#tensorflow-install">
+            tensorflow install
+          </a>
+        </li>
+      
+    </ol>
+  </nav>
+
+
+    
+
+    <p align="center"><img src="https://live.staticflickr.com/65535/50672069586_43a96d4da5_c_d.jpg" style="zoom:200%;" />
+<h2 id="why-ubuntu---32-bit-64-bit-">Why Ubuntu - 32 bit/ 64 bit ?</h2>
+<p>Out of plenty of operating systems available for raspberry pi, we need stable one&rsquo;s intended to run  ml projects (tf-lite, opencv). Raspberry Pi group&rsquo;s debian based <strong>raspbian os</strong> provide good support and stable, but it is 32 bit. There is a 64 bit version out but in beta stage. We need a 64 bit OS for increased performance. Ubuntu provides OS in 64 bit version for rpi. It&rsquo;s good to go.</p>
+<aside aria-label="note" class="note">
+  <div>
+    <svg class="sign" aria-hidden="true" viewBox="0 0 41.667306 41.66729" focusable="false">
+      <use xlink:href="#info"></use>
+    </svg>
+    
+ Note: If your device has low memory (1gb) then it's better to choose 32bit OS.
+
+  </div>
+</aside>
+
+<h2 id="headless-installation">Headless installation</h2>
+<p>If you don&rsquo;t have separate monitor, (or) keyboard, (or) mouse for the regular installation you can choose this process.</p>
+<ol>
+<li>Download the Ubuntu Server Image from the official site: <a href="https://ubuntu.com/download/raspberry-pi/thank-you?version=20.04.1&amp;architecture=server-arm64+raspi">link</a></li>
+<li>Download <a href="https://www.balena.io/etcher/">balena etcher</a> and flash the image to the SD card.</li>
+<li>After flashing is done, open boot folder from the sd card and edit <code>network-config</code> file  to connect wifi.</li>
+</ol>
+<p>Uncomment the lines below and change according your network.</p>
+<pre><code>wifis:
+  wlan0:
+  dhcp4: true
+  optional: true
+  access-points:
+    &lt;wifi network name&gt;:
+      password: &quot;&lt;wifi password&gt;&quot;
+</code></pre>
+<p>Save the file and remove sd card and place it in raspberry pi. After first boot wait for 20 sec and restart the machine.</p>
+<p>Check for rpi&rsquo;s ip address using wifi portal or <strong>fing app</strong> in mobile phone and ssh into the machine using the ip address.</p>
+<h2 id="desktop-flavour-install">Desktop flavour install</h2>
+<p>We installed the server, next step is to install desktop environment. There are <a href="https://ubuntu.com/download/flavours">flavours</a> in ubuntu for DE. As we have less computational resources, choose a lightweight flavour like xubuntu/lubuntu.</p>
+<p>I used this awesome <a href="https://github.com/wimpysworld/desktopify">script</a>  to install desktop environment.</p>
+
+
+<pre class="cmd">
+  
+  <code>git clone https://github.com/wimpysworld/desktopify.git</code>
+  
+  <code>cd desktopify</code>
+  
+  <code>sudo ./desktopify --de xubuntu</code>
+  
+</pre>
+
+<p>Finally install xrdp server to access the gui remotely. (xrdp &raquo;&gt; vnc)
+
+
+<pre class="cmd">
+  
+  <code>sudo apt-get install xrdp</code>
+  
+</pre>
+</p>
+<p>you can connect remotely using <strong>remmina</strong> by ip-address</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+<figure role="group" aria-describedby="caption-d41d8cd98f00b204e9800998ecf8427e">
+  <a href="/rpi-ubuntu/im3.png" class="img-link">
+    <img src="/rpi-ubuntu/im3_hu8ad6a7480573b7d8ef67998b23c7f4fb_202627_500x0_resize_box_2.png">
+  </a>
+  <figcaption id="caption-d41d8cd98f00b204e9800998ecf8427e">
+    
+  </figcaption>
+</figure>
+
+<h2 id="overclocking">overclocking</h2>
+<aside aria-label="warning" class="note warning">
+  <div>
+    <svg class="sign" aria-hidden="true" viewBox="0 0 48.430474 41.646302" focusable="false">
+      <use xlink:href="#warning"></use>
+    </svg>
+    
+Proceed with caution. Overclock your device if you had a proper cooling system
+
+  </div>
+</aside>
+
+<p>Add these below lines at end of  <code>/boot/config.txt</code></p>
+
+
+<pre class="cmd">
+  
+  <code>sudo nano /boot/config.txt</code>
+  
+</pre>
+
+<pre><code class="language-text">over_voltage = 2
+arm_freq = 1750
+</code></pre>
+<p>then reboot : - )</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+<figure role="group" aria-describedby="caption-d41d8cd98f00b204e9800998ecf8427e">
+  <a href="/rpi-ubuntu/im2.png" class="img-link">
+    <img src="/rpi-ubuntu/im2_huc2fa1fed7d30f73dadf3adb1a061f7ad_268901_500x0_resize_box_2.png">
+  </a>
+  <figcaption id="caption-d41d8cd98f00b204e9800998ecf8427e">
+    
+  </figcaption>
+</figure>
+
+<p>To check clock speed use this command:
+
+
+<pre class="cmd">
+  
+  <code>`lscpu | grep MHz.`</code>
+  
+</pre>
+</p>
+<h2 id="memory-swapping">memory swapping</h2>
+
+
+<pre class="cmd">
+  
+  <code>sudo apt-get install zram-config</code>
+  
+  <code>sudo nano /usr/bin/init-zram-swapping</code>
+  
+</pre>
+
+<p>Add a multiplier (* 5) at the end of the mem&hellip;. line. This gives you about 4.5 Gbyte of memory swap ( like this <code>1024 * 5</code>)</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+<figure role="group" aria-describedby="caption-d41d8cd98f00b204e9800998ecf8427e">
+  <a href="/rpi-ubuntu/im1.png" class="img-link">
+    <img src="/rpi-ubuntu/im1_hub7559aa3b64390f7a0811c291b3b9b73_277917_500x0_resize_box_2.png">
+  </a>
+  <figcaption id="caption-d41d8cd98f00b204e9800998ecf8427e">
+    
+  </figcaption>
+</figure>
+
+<p>reboot : - )</p>
+<h2 id="tensorflow-install">tensorflow install</h2>
+<ul>
+<li>
+<p>Build tensorflow using the pre-built binaries from this repo: <a href="https://github.com/PINTO0309/Tensorflow-bin">https://github.com/PINTO0309/Tensorflow-bin</a></p>
+</li>
+<li>
+<p>Build tensorflow-lite using the pre-built binaries from this repo: <a href="https://github.com/PINTO0309/TensorflowLite-bin">https://github.com/PINTO0309/TensorflowLite-bin</a></p>
+</li>
+</ul>
+
   </main>
+  <div id="disqus-container">
+  
+    <button id="disqus-button" onclick="showComments()">Show comments</button>
+    <div id="disqus-comments">
+      
+      
+      
+        <div id="disqus_thread">
+        </div>
+        <script type="application/javascript">
+          function showComments() {
+            // Config
+var disqus_config = function () {
+};
+// Build and append comments 
+var d = document;
+var s = d.createElement('script');
+s.async = true;
+s.src = '//' + "ash11sh-1" + '.disqus.com/embed.js';
+s.setAttribute('data-timestamp', + new Date());
+(d.head || d.body).appendChild(s);
+            // Remove button
+var disqusButton = document.getElementById('disqus-button');
+disqusButton.parentNode.removeChild(disqusButton); 
+// Un-hide comments
+var disqusComments = document.getElementById('disqus-comments');
+disqusComments.style.display = 'block'; 
+          }
+        </script>
+      
+      <noscript>Enable JavaScript to view Disqus comments.</noscript>
+    </div>
+  
+</div>
+
 
           <footer role="contentinfo">
   <div>

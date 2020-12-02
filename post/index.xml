@@ -6,7 +6,16 @@
     <description>Recent content in Blog on Ashish&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://ash11sh.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 02 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://ash11sh.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Installing Ubuntu 20.04 on raspberry pi for Tensorflow</title>
+      <link>https://ash11sh.github.io/rpi-ubuntu/</link>
+      <pubDate>Wed, 02 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://ash11sh.github.io/rpi-ubuntu/</guid>
+      <description>Why Ubuntu - 32 bit/ 64 bit ? Out of plenty of operating systems available for raspberry pi, we need stable one&amp;rsquo;s intended to run ml projects (tf-lite, opencv). Raspberry Pi group&amp;rsquo;s debian based raspbian os provide good support and stable, but it is 32 bit. There is a 64 bit version out but in beta stage. We need a 64 bit OS for increased performance. Ubuntu provides OS in 64 bit version for rpi.</description>
+    </item>
+    
     <item>
       <title>Deploying your ml model via telegram bot</title>
       <link>https://ash11sh.github.io/bot-telegram/</link>

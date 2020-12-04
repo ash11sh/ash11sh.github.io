@@ -342,6 +342,16 @@
           </a>
         </li>
       
+        <li>
+          
+          
+          
+          
+          <a href="#opencv-install">
+            opencv install
+          </a>
+        </li>
+      
     </ol>
   </nav>
 
@@ -524,6 +534,145 @@ arm_freq = 1750
 <p>Build tensorflow-lite using the pre-built binaries from this repo: <a href="https://github.com/PINTO0309/TensorflowLite-bin">https://github.com/PINTO0309/TensorflowLite-bin</a></p>
 </li>
 </ul>
+<h2 id="opencv-install">opencv install</h2>
+<h3 id="option-1">Option 1</h3>
+<p>directly installing from  ppa repo:</p>
+
+
+<pre class="cmd">
+  
+  <code>sudo apt-get update</code>
+  
+  <code>sudo apt-get upgrade</code>
+  
+  <code>sudo apt install libopencv-dev python3-opencv</code>
+  
+</pre>
+
+<p>you can verify the installation by following command:
+
+
+<pre class="cmd">
+  
+  <code>python3 -c &#34;import cv2; print(cv2.__version__)&#34;</code>
+  
+</pre>
+</p>
+<h3 id="option-2---directly-from-source">Option 2 - directly from source</h3>
+<p>Before moving forward remember to set swap space(&gt; 3gb), it is essential for build process.</p>
+<p>Install these following dependencies</p>
+
+
+<pre class="cmd">
+  
+  <code>sudo apt-get update</code>
+  
+  <code>sudo apt-get upgrade</code>
+  
+  <code>sudo apt-get install build-essential cmake gcc g&#43;&#43; git unzip pkg-config</code>
+  
+  <code>sudo apt-get install libjpeg-dev libpng-dev libtiff-dev</code>
+  
+  <code>sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev</code>
+  
+  <code>sudo apt-get install libgtk2.0-dev libcanberra-gtk*</code>
+  
+  <code>sudo apt-get install libxvidcore-dev libx264-dev</code>
+  
+  <code>sudo apt-get install python3-dev python3-numpy python3-pip</code>
+  
+  <code>sudo apt-get install libtbb2 libtbb-dev libdc1394-22-dev</code>
+  
+  <code>sudo apt-get install libv4l-dev v4l-utils</code>
+  
+  <code>sudo apt-get install libopenblas-dev libatlas-base-dev libblas-dev</code>
+  
+  <code>sudo apt-get install liblapack-dev gfortran libhdf5-dev</code>
+  
+  <code>sudo apt-get install libprotobuf-dev libgoogle-glog-dev libgflags-dev</code>
+  
+  <code>sudo apt-get install protobuf-compiler</code>
+  
+</pre>
+
+<p>Next, download and unzip the packages</p>
+
+
+<pre class="cmd">
+  
+  <code>cd ~</code>
+  
+  <code>wget -O opencv.zip https://github.com/opencv/opencv/archive/4.4.0.zip</code>
+  
+  <code>wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.4.0.zip</code>
+  
+  <code>unzip opencv.zip</code>
+  
+  <code>unzip opencv_contrib.zip</code>
+  
+  <code>#rename the folders</code>
+  
+  <code>mv opencv-4.4.0 opencv</code>
+  
+  <code>mv opencv_contrib-4.4.0 opencv_contrib</code>
+  
+  <code>cd opencv</code>
+  
+  <code>mkdir build</code>
+  
+  <code>cd build</code>
+  
+</pre>
+
+<p>Build make</p>
+<pre><code class="language-shell">$ cmake -D CMAKE_BUILD_TYPE=RELEASE \
+	  -D CMAKE_INSTALL_PREFIX=/usr/local \
+	  -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
+	  -D ENABLE_NEON=ON \
+	  -D BUILD_TIFF=ON \
+      -D WITH_FFMPEG=ON \
+	  -D WITH_GSTREAMER=ON \
+	  -D WITH_TBB=ON \
+      -D BUILD_TBB=ON \
+      -D BUILD_TESTS=OFF \
+      -D WITH_EIGEN=OFF \
+      -D WITH_V4L=ON \
+      -D WITH_LIBV4L=ON \
+      -D WITH_VTK=OFF \
+      -D OPENCV_ENABLE_NONFREE=ON \
+      -D INSTALL_C_EXAMPLES=OFF \
+      -D INSTALL_PYTHON_EXAMPLES=OFF \
+      -D BUILD_NEW_PYTHON_SUPPORT=ON \
+      -D BUILD_opencv_python3=TRUE \
+      -D OPENCV_GENERATE_PKGCONFIG=ON \
+      -D BUILD_EXAMPLES=OFF ..
+</code></pre>
+<p>build with these commands</p>
+
+
+<pre class="cmd">
+  
+  <code>make -j4</code>
+  
+  <code>sudo make install</code>
+  
+  <code>sudo ldconfig</code>
+  
+  <code>sudo apt-get update</code>
+  
+</pre>
+
+<p>Verify installation
+
+
+<pre class="cmd">
+  
+  <code>pkg-config --modversion opencv4</code>
+  
+  <code>python3 -c &#34;import cv2; print(cv2.__version__)&#34;</code>
+  
+</pre>
+</p>
 
   </main>
   <div id="disqus-container">

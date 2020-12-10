@@ -14,7 +14,7 @@
       
       <guid>https://ash11sh.github.io/rangoli/</guid>
       <description>Materials I used :  Data-set comprising of rangoli images ( ~13k) StyleGan2 - Tensorflow A little patience Google Colab (Tesla P100 ~24gb ram)  Firstly I thouht of using pre-made data-sets, but decided to build one. Making a data-set is painful process but rewarding. I used instagram and search engine scrappers to download rangoli images. Found many on web, really thankful to the Indian tradition and people.
-Image Preprocessing Downloaded images, now what?</description>
+real images</description>
     </item>
     
     <item>

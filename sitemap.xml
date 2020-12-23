@@ -3,22 +3,32 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://ash11sh.github.io/post/</loc>
+    <lastmod>2020-12-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ash11sh.github.io/tags/cv/</loc>
+    <lastmod>2020-12-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ash11sh.github.io/tags/</loc>
+    <lastmod>2020-12-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ash11sh.github.io/yolov5/</loc>
+    <lastmod>2020-12-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ash11sh.github.io/tags/arts/</loc>
     <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ash11sh.github.io/post/</loc>
-    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://ash11sh.github.io/rangoli/</loc>
-    <lastmod>2020-12-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ash11sh.github.io/tags/</loc>
     <lastmod>2020-12-07T00:00:00+00:00</lastmod>
   </url>
   
@@ -30,11 +40,6 @@
   <url>
     <loc>https://ash11sh.github.io/tags/raspberry/</loc>
     <lastmod>2020-12-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ash11sh.github.io/tags/cv/</loc>
-    <lastmod>2020-11-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>

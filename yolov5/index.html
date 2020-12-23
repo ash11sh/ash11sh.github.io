@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.79.0" />
-  <link rel="canonical" href="/post/">
+  <link rel="canonical" href="/yolov5/">
 
   
 
@@ -39,7 +39,7 @@
 
   
   
-  <title>Blog | Ashish&#39;s blog</title>
+  <title>Yolov5 training with Custom Dataset | Ashish&#39;s blog</title>
 </head>
 
   <body>
@@ -241,116 +241,304 @@
       <div class="main-and-footer">
         <div>
           
-<main id="main">
-  <h1>Blog</h1>
+  <main id="main">
+    <h1>
+      <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
+        <use xlink:href="#bookmark"></use>
+      </svg>
+      Yolov5 training with Custom Dataset
+    </h1>
+
+    <div class="date">
+      
+      
+      <strong>Publish date: </strong>Dec 23, 2020
+      
+        
+      
+    </div>
+
+    
+      <div class="tags">
+        <strong>Tags: </strong>
+        <ul aria-label="tags">
+          
+            <li>
+              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+                <use xlink:href="#tag"></use>
+              </svg>
+              
+              <a href="/tags/cv/">CV</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+    
+    
+      
+
+  <nav class="toc" aria-labelledby="toc-heading">
+    <h2 id="toc-heading">Table of contents</h2>
+    <ol>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#intro">
+            intro
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#data">
+            data
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#train">
+            train
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#model-performance-metrics">
+            Model Performance Metrics
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#onnx-model-conversion">
+            Onnx model conversion
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#inference">
+            inference
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#final-thoughts">
+            final thoughts
+          </a>
+        </li>
+      
+    </ol>
+  </nav>
+
+
+    
+
+    <p><center><img src="https://live.staticflickr.com/65535/50750405757_115792ed54_o_d.jpg" alt="joey" style="zoom:130%;" /></center></p>
+<h2 id="intro">intro</h2>
+<p>I recently came across wildlife projects using AI and how they are helping in protecting endangered species and thought of making a model to help detecting tigers🐅 in the wild. Scroll down, too see how i trained my object detection model.</p>
+<p>​</p>
+<p>If you are active in computer vision, you may have heard about <a href="https://github.com/ultralytics/yolov5">yolov5</a>.  There&rsquo;s some controversy around its naming, you can read details from <a href="https://medium.com/swlh/yolov5-controversy-is-yolov5-real-20e048bebb08">here.</a> Ultralytics team put a great effort in open-sourcing this model 👏👏👏</p>
+<p>​</p>
+<p><center><img src="https://live.staticflickr.com/65535/50750867037_e62c653d0c_d.jpg" alt="yolo" style="zoom:130%;" /></center></p>
+<p>I decided to use yolov5s model, which is light weight version and claiming better fps on edge devices.</p>
+<h2 id="data">data</h2>
+<p>Regarding data, I googled about <code>tiger dataset</code> and got to know about <em>Amur Tiger Re-identification in the Wild</em> (ATRW) dataset.</p>
+<blockquote>
+<p>data-set website: <a href="https://cvwc2019.github.io/challenge.html">https://cvwc2019.github.io/challenge.html</a></p>
+<p>paper: <a href="https://arxiv.org/abs/1906.05586">https://arxiv.org/abs/1906.05586</a></p>
+</blockquote>
+<p>Train set and Validation set consists of 2485 and 277 images respectively. And converted the data-set which is labelled in voc (.xml) format to yolo (.txt) format using this code: <a href="https://github.com/bjornstenger/xml2yolo">link</a></p>
+<p><code>If you had unlabelled images, use tools like CVAT, makesense.ai or labelme to annotate them </code></p>
+<p>data directory looks like this:</p>
+<pre><code class="language-markdown">├── train
+│   ├── images
+│   └── labels
+└── valid
+    ├── images
+    └── labels
+</code></pre>
+<p>Prepare <code>data.yaml </code> file, before proceed to training like this:</p>
+<pre><code class="language-yaml">train: ../train/images
+val: ../valid/images
+
+nc: 1
+names: ['tiger']
+</code></pre>
+<h2 id="train">train</h2>
+<p>Zip the entire folder along with yaml file and uploaded to google drive, so that easy to download in colab. Based on your luck and timing you may get P100 gpu in google colab, use it to train the model.</p>
+<ul>
+<li>Clone repo and Install required dependecies:</li>
+</ul>
+<pre><code class="language-sh">$ !git clone https://github.com/ultralytics/yolov5  # clone repo
+$ %cd yolov5
+$ !pip install -r requirements.txt  # install dependencies
+</code></pre>
+<ul>
+<li>
+<p>download the dataset from gdrive and unzip it.</p>
+<pre><code class="language-sh">$ !gdown --id &lt;your dataset download-id&gt; ##download from drive
+$ !unzip data.zip # unzip your dataset
+</code></pre>
+</li>
+</ul>
+<blockquote>
+<p>go through this <a href="https://github.com/wkentaro/gdown">link</a> to get familiar with <strong>gdown</strong></p>
+</blockquote>
+<ul>
+<li>
+<p>start training by selecting input image size, batch size and setting number of epochs</p>
+<pre><code class="language-shell">$ !python train.py --img 640 --batch 16 --epochs 300 --data data.yaml --weights yolov5s.pt
+</code></pre>
+</li>
+</ul>
+<blockquote>
+<p>All training results are saved to <code>runs/train/ directory</code></p>
+</blockquote>
+<p>You can go through this <a href="https://colab.research.google.com/github/ultralytics/yolov5/blob/master/tutorial.ipynb">colab notebook</a> for more info.</p>
+<h2 id="model-performance-metrics">Model Performance Metrics</h2>
+<p>You can setup <a href="https://wandb.ai/">weights and bias</a> account and start seeing model metrics and visualise batch images while it is training. It is integrated with yolov5, so that its easy for you to setup.</p>
+<aside aria-label="note" class="note">
+  <div>
+    <svg class="sign" aria-hidden="true" viewBox="0 0 41.667306 41.66729" focusable="false">
+      <use xlink:href="#info"></use>
+    </svg>
+    run this step before you start training
+  </div>
+</aside>
+
+<pre><code class="language-shell"># Weights &amp; Biases (optional)
+$ %pip install -q wandb  
+$ !wandb login
+</code></pre>
+<blockquote>
+<p>​																<strong>batch images</strong></p>
+</blockquote>
+<p><center><img src="https://live.staticflickr.com/65535/50750866972_bd03dd55dd_d.jpg" alt="wb1" style="zoom:130%;" /></center></p>
+<blockquote>
+<p>​																<strong>metrics</strong></p>
+</blockquote>
+<p><center><img src="https://live.staticflickr.com/65535/50750022523_65fb7e8f46_d.jpg" alt="wb2" style="zoom:130%;" /></center></p>
+<h2 id="onnx-model-conversion">Onnx model conversion</h2>
+<p>Install onnx tools</p>
+<pre><code class="language-shell">$ !pip install onnx&gt;=1.7.0  # for ONNX export
+</code></pre>
+<p>Export model to onnx</p>
+<pre><code class="language-shell">$ !python models/export.py --weights yolov5s.pt --img 640 --batch 1  # export at 640x640 with batch size 1
+</code></pre>
+<ul>
+<li>you can see more about model export on this thread <a href="https://github.com/ultralytics/yolov5/issues/251">:link:</a></li>
+<li>About <strong>pytorch</strong> to <strong>tensorflow</strong> model conversion <a href="https://github.com/ultralytics/yolov5/pull/1127">:link:</a></li>
+</ul>
+<h2 id="inference">inference</h2>
+<p>for inference on batch of images:</p>
+<pre><code class="language-shell">!python detect.py --source data/images --weights yolov5s.pt --conf 0.25
+</code></pre>
+<p>for video inference:</p>
+<pre><code class="language-shell">!python detect.py --source file.mp4 --weights yolov5s.pt --conf 0.25
+</code></pre>
+<aside aria-label="warning" class="note warning">
+  <div>
+    <svg class="sign" aria-hidden="true" viewBox="0 0 48.430474 41.646302" focusable="false">
+      <use xlink:href="#warning"></use>
+    </svg>
+    Don't forget to save the model in google drive
+  </div>
+</aside>
+
+<p><center><img src="https://live.staticflickr.com/65535/50750866877_6fdf730351_d.jpg" alt="tiger" style="zoom:130%;" /></center></p>
+<h2 id="final-thoughts">final thoughts</h2>
+<p>Successfully trained the model, now looking forward to use it on edge device like raspberry pi. Last november PyTorch <a href="https://pytorch.org/blog/prototype-features-now-available-apis-for-hardware-accelerated-mobile-and-arm64-builds/">announced</a> their officials builds for Arm64 devices. (nightly)</p>
+<div class="expandable-section">
   
-  <input
-    id="search"
-    type="text"
-    placeholder="Search by title..."
-    aria-label="Search by title"
-  />
+    <h1>
   
-  <ul class="patterns-list" id="list">
     
-    <li>
-      <h2>
-        <a href="/yolov5/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use xlink:href="#bookmark"></use>
-          </svg>
-          Yolov5 training with Custom Dataset
-        </a>
-      </h2>
-    </li>
     
-    <li>
-      <h2>
-        <a href="/rangoli/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use xlink:href="#bookmark"></use>
-          </svg>
-          How I trained my Rangoli Art(GAN)
-        </a>
-      </h2>
-    </li>
     
-    <li>
-      <h2>
-        <a href="/rpi-ubuntu/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use xlink:href="#bookmark"></use>
-          </svg>
-          Installing Ubuntu 20.04 on raspberry pi for Tensorflow
-        </a>
-      </h2>
-    </li>
     
-    <li>
-      <h2>
-        <a href="/bot-telegram/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use xlink:href="#bookmark"></use>
-          </svg>
-          Deploying your ml model via telegram bot
-        </a>
-      </h2>
-    </li>
     
-    <li>
-      <h2>
-        <a href="/image-dataset/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use xlink:href="#bookmark"></use>
-          </svg>
-          Building Image Dataset
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/cv-data/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use xlink:href="#bookmark"></use>
-          </svg>
-          Finding Computer Vision Datasets
-        </a>
-      </h2>
-    </li>
-    
-  </ul>
-</main>
+    <button aria-expanded="false" data-expands="js-expandable-93f9b501a4be80afcd42e46eded1281e">
+      <span class="expandable-label">Installing PyTorch on raspberry(arm64):</span>
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 70.866142 70.866141">
+        <g transform="translate(0 -981.5)">
+          <rect style="stroke-width:0;fill:currentColor" ry="5" height="60" width="9.8985" y="987.36" x="30.051" class="up-strut" />
+          <rect style="stroke-width:0;fill:currentColor" ry="5" height="10" width="60" y="1012.4" x="5"/>
+        </g>
+      </svg>
+    </button>
+  
+    </h1>
+  
+  <div id="js-expandable-93f9b501a4be80afcd42e46eded1281e" hidden>
+    <pre><code class="language-shell">$ pip install numpy
+$ pip install --pre torch torchvision torchaudio -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
+</code></pre>
+
+  </div>
+</div>
+
+
+  </main>
+  <div id="disqus-container">
+  
+    <button id="disqus-button" onclick="showComments()">Show comments</button>
+    <div id="disqus-comments">
+      
+      
+      
+        <div id="disqus_thread">
+        </div>
+        <script type="application/javascript">
+          function showComments() {
+            // Config
+var disqus_config = function () {
+};
+// Build and append comments 
+var d = document;
+var s = d.createElement('script');
+s.async = true;
+s.src = '//' + "ash11sh-1" + '.disqus.com/embed.js';
+s.setAttribute('data-timestamp', + new Date());
+(d.head || d.body).appendChild(s);
+            // Remove button
+var disqusButton = document.getElementById('disqus-button');
+disqusButton.parentNode.removeChild(disqusButton); 
+// Un-hide comments
+var disqusComments = document.getElementById('disqus-comments');
+disqusComments.style.display = 'block'; 
+          }
+        </script>
+      
+      <noscript>Enable JavaScript to view Disqus comments.</noscript>
+    </div>
+  
+</div>
+
 
           <footer role="contentinfo">
   <div>

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.79.0" />
-  <link rel="canonical" href="/yolov5/">
+  <link rel="canonical" href="/eye-gan/">
 
   
 
@@ -39,7 +39,7 @@
 
   
   
-  <title>Yolov5 training with Custom Dataset | Ashish&#39;s blog</title>
+  <title>Removing Eye-glasses from face | Ashish&#39;s blog</title>
 </head>
 
   <body>
@@ -246,13 +246,13 @@
       <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
         <use xlink:href="#bookmark"></use>
       </svg>
-      Yolov5 training with Custom Dataset
+      Removing Eye-glasses from face
     </h1>
 
     <div class="date">
       
       
-      <strong>Publish date: </strong>Dec 23, 2020
+      <strong>Publish date: </strong>Jan 17, 2021
       
         
       
@@ -297,8 +297,8 @@
           
           
           
-          <a href="#data">
-            data
+          <a href="#data-set">
+            data set
           </a>
         </li>
       
@@ -307,8 +307,8 @@
           
           
           
-          <a href="#train">
-            train
+          <a href="#training">
+            training
           </a>
         </li>
       
@@ -317,8 +317,8 @@
           
           
           
-          <a href="#model-performance-metrics">
-            Model Performance Metrics
+          <a href="#results">
+            results
           </a>
         </li>
       
@@ -327,28 +327,8 @@
           
           
           
-          <a href="#onnx-model-conversion">
-            Onnx model conversion
-          </a>
-        </li>
-      
-        <li>
-          
-          
-          
-          
-          <a href="#inference">
-            inference
-          </a>
-        </li>
-      
-        <li>
-          
-          
-          
-          
-          <a href="#final-thoughts">
-            final thoughts
+          <a href="#conclusion">
+            conclusion
           </a>
         </li>
       
@@ -358,151 +338,153 @@
 
     
 
-    <p><center><img src="https://live.staticflickr.com/65535/50750405757_115792ed54_o_d.jpg" alt="joey" style="zoom:130%;" /></center></p>
-<h2 id="intro">intro</h2>
-<p>I recently came across wildlife projects using AI and how they are helping in protecting endangered species and thought of making a model to help detecting tigers🐅 in the wild. Scroll down, too see how i trained my object detection model.</p>
-<p>​</p>
-<p>If you are active in computer vision, you may have heard about <a href="https://github.com/ultralytics/yolov5">yolov5</a>.  There&rsquo;s some controversy around its naming, you can read details from <a href="https://medium.com/swlh/yolov5-controversy-is-yolov5-real-20e048bebb08">here.</a> Ultralytics team put a great effort in open-sourcing this model 👏👏👏</p>
-<p>​</p>
-<p><center><img src="https://live.staticflickr.com/65535/50750867037_e62c653d0c_d.jpg" alt="yolo" style="zoom:130%;" /></center></p>
-<p>I decided to use yolov5s model, which is light weight version and claiming better fps on edge devices.</p>
-<h2 id="data">data</h2>
-<p>Regarding data, I googled about <code>tiger dataset</code> and got to know about <em>Amur Tiger Re-identification in the Wild</em> (ATRW) dataset.</p>
-<blockquote>
-<p>data-set website: <a href="https://cvwc2019.github.io/challenge.html">https://cvwc2019.github.io/challenge.html</a></p>
-<p>paper: <a href="https://arxiv.org/abs/1906.05586">https://arxiv.org/abs/1906.05586</a></p>
-</blockquote>
-<p>Train set and Validation set consists of 2485 and 277 images respectively. And converted the data-set which is labelled in voc (.xml) format to yolo (.txt) format using this code: <a href="https://github.com/bjornstenger/xml2yolo">link</a></p>
-<p><code>If your dataset had unlabelled images, use tools like CVAT, makesense.ai or labelme to annotate them </code></p>
-<p>data directory looks like this:</p>
-<pre><code class="language-markdown">├── train
-│   ├── images
-│   └── labels
-└── valid
-    ├── images
-    └── labels
-</code></pre>
-<p>Prepare <code>data.yaml </code> file, before proceed to training like this:</p>
-<pre><code class="language-yaml">train: ../train/images
-val: ../valid/images
+    <h2 id="intro">intro</h2>
+<p>I recently tried to implement code for trying out glass frames like snapchat filter. Used OpenCV and numpy for this process of overlaying frame. Result came out good for frontal posed face.</p>
 
-nc: 1
-names: ['tiger']
-</code></pre>
-<p>here <code>nc  </code>  refers to number of classes.</p>
-<h2 id="train">train</h2>
-<p>Zip the entire folder along with yaml file and uploaded to google drive, so that easy to download in colab. Based on your luck and timing you may get P100 gpu in google colab, use it to train the model.</p>
-<ul>
-<li>Clone repo and Install required dependecies:</li>
-</ul>
-<pre><code class="language-sh">$ !git clone https://github.com/ultralytics/yolov5  # clone repo
-$ %cd yolov5
-$ !pip install -r requirements.txt  # install dependencies
-</code></pre>
+
+
+
+
+
+
+
+
+  
+
+
+<figure role="group" aria-describedby="caption-a3608fdc4fad25690208f691de61eedf">
+  <a href="/eye-gan/imq.png" class="img-link">
+    <img src="/eye-gan/imq_hu3e793d410c293107748d7d61693a38d8_2478268_500x0_resize_box_2.png">
+  </a>
+  <figcaption id="caption-a3608fdc4fad25690208f691de61eedf">
+    demo - overlaying frame
+  </figcaption>
+</figure>
+
+<p>But you need to give input image without wearing glasses to get better results. I tried giving an image of person with wearing glasses and it came out like this.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+<figure role="group" aria-describedby="caption-2aba24211bca6b2939236f8874f2639f">
+  <a href="/eye-gan/im2.png" class="img-link">
+    <img src="/eye-gan/im2_hu82934f9f3ddc5dd066f34921a19b8094_1162990_500x0_resize_box_2.png">
+  </a>
+  <figcaption id="caption-2aba24211bca6b2939236f8874f2639f">
+    Warner Bros owns the copyright of Harry Potter films
+  </figcaption>
+</figure>
+
+<p>We can use <em>in-painting</em> methods for deleting eye glasses from image (pixel level editing). It is hard manual process and replacing pixels with right ones is hard. I went through internet for finding any way to removing eye glasses.</p>
+<p>I found a paper from early 2004 <a href="http://people.csail.mit.edu/~celiu/pdfs/eyeglasses-TPAMI.pdf">Automatic Eyeglasses Removal from Face Images </a>, it uses Markov-chain Monte Carlo method for locating eye-glasses and some complex methods to synthesise face without eye-glasses. Below is the image depicting its process flow.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+<figure role="group" aria-describedby="caption-36d7aa0454f2432aedb83df7572f11f6">
+  <a href="/eye-gan/screen.png" class="img-link">
+    <img src="/eye-gan/screen_huc2f6361d042668065c0309208e8e5c21_73920_500x0_resize_box_2.png">
+  </a>
+  <figcaption id="caption-36d7aa0454f2432aedb83df7572f11f6">
+    source:  <a href="http://people.csail.mit.edu/~celiu/pdfs/eyeglasses-TPAMI.pdf">Automatic Eyeglasses Removal from Face Images </a>
+  </figcaption>
+</figure>
+
+<p>​</p>
+<p>Its hard for me to replicate this paper as I don&rsquo;t know much about this complex algorithms. So for keeping it simple task, i went with deep learning methods. Like many people, I too used &lsquo;faceapp&rsquo; for trying out cool features of age conversion, gender transformation etc.,</p>
+<p>Faceapp used image to image translation (cyclegan, pix2pix) models for those tasks. It means learning features from one image and applying to another image - <strong>Image Reconstruction</strong>. I decided to give it a shot for reconstructing face without glasses.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+<figure role="group" aria-describedby="caption-09818cfd12c4455f4594649fe875cfea">
+  <a href="/eye-gan/horse2zebra.jpg" class="img-link">
+    <img src="/eye-gan/horse2zebra_huda55998338e5b9a1f6890df544f0c3af_46897_500x0_resize_q99_box.jpg">
+  </a>
+  <figcaption id="caption-09818cfd12c4455f4594649fe875cfea">
+    <em>Applying styles between horse and zebra using cyclegan</em>
+  </figcaption>
+</figure>
+
+<p>​</p>
+<h2 id="data-set">data set</h2>
+<p>Okay now here comes data part. For every deep learning application data is crucial and especially for this task. For pix2pix model, we need paired set of data i.e., <code>same person with glass and without glass</code> . And for cyclegan model, we can train with unpaired  set of data  i.e., <code>person X with glass and person Y without glass</code>.</p>
+<p>I prepared data using aligned <a href="http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html"><em>celeb A</em></a> data-set with approx 200K images. Separated data-set into two categories one with glass and another without glass using <em>attribute label</em> file provided with data-set.</p>
+<h2 id="training">training</h2>
 <ul>
 <li>
-<p>download the dataset from gdrive and unzip it.</p>
-<pre><code class="language-sh">$ !gdown --id &lt;your dataset download-id&gt; ##download from drive
-$ !unzip data.zip # unzip your dataset
-</code></pre>
+<p><a href="https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix">pytorch-CycleGAN-and-pix2pix</a>: Used code from this repository for training and testing purpose.</p>
 </li>
-</ul>
-<blockquote>
-<p>go through this <a href="https://github.com/wkentaro/gdown">link</a> to get familiar with <strong>gdown</strong></p>
-</blockquote>
-<ul>
 <li>
-<p>start training by selecting input image size, batch size and setting number of epochs</p>
-<pre><code class="language-shell">$ !python train.py --img 640 --batch 16 --epochs 300 --data data.yaml --weights yolov5s.pt
-</code></pre>
+<p>There&rsquo;s also a TensorFlow version available : <a href="https://github.com/tensorflow/docs/blob/master/site/en/tutorials/generative/cyclegan.ipynb">TensorFlow Core CycleGAN</a></p>
+</li>
+<li>
+<p>Thankful to google for providing colab platform, which helped with training the model for long hours.</p>
+</li>
+<li>
+<p>As I&rsquo;m trying out cyclegan for first time, i kept the default configuratiion untouched, and changed image loading size according to dataset.</p>
+</li>
+<li>
+<p>After training the model for 11 epochs , 2 million+ iterations , with batch size 1, I stopped the process.</p>
+</li>
+<li>
+<p>To know how well your model trained, you need to calculate Frechet Inception Distance score (FID). To know more about FID search the internet, you may find well written answers.</p>
+</li>
+<li>
+<p>I didn&rsquo;t calculated the FID score, but stopped training the model by seeing the sample outcomes during training process.</p>
 </li>
 </ul>
-<blockquote>
-<p>All training results are saved to <code>runs/train/ directory</code></p>
-</blockquote>
-<p>You can go through this <a href="https://colab.research.google.com/github/ultralytics/yolov5/blob/master/tutorial.ipynb">colab notebook</a> for more info.</p>
-<h2 id="model-performance-metrics">Model Performance Metrics</h2>
-<p>You can setup <a href="https://wandb.ai/">weights and bias</a> account and start seeing model metrics and visualise batch images while it is training. It is integrated with yolov5, so that its easy for you to setup.</p>
-<aside aria-label="note" class="note">
-  <div>
-    <svg class="sign" aria-hidden="true" viewBox="0 0 41.667306 41.66729" focusable="false">
-      <use xlink:href="#info"></use>
-    </svg>
-    run this step before you start training
-  </div>
-</aside>
+<h2 id="results">results</h2>
+<p>I tested the model, It worked well for some images, and didn&rsquo;t for few others. I inferred above mentioned image into the model and the result is satisfactory for now.</p>
 
-<pre><code class="language-shell"># Weights &amp; Biases (optional)
-$ %pip install -q wandb  
-$ !wandb login
-</code></pre>
-<blockquote>
-<p>​																<strong>batch images</strong></p>
-</blockquote>
-<p><center><img src="https://live.staticflickr.com/65535/50750866972_bd03dd55dd_d.jpg" alt="wb1" style="zoom:130%;" /></center></p>
-<blockquote>
-<p>​																<strong>metrics</strong></p>
-</blockquote>
-<p><center><img src="https://live.staticflickr.com/65535/50750022523_65fb7e8f46_d.jpg" alt="wb2" style="zoom:130%;" /></center></p>
-<h2 id="onnx-model-conversion">Onnx model conversion</h2>
-<p>Install onnx tools</p>
-<pre><code class="language-shell">$ !pip install onnx&gt;=1.7.0  # for ONNX export
-</code></pre>
-<p>Export model to onnx</p>
-<pre><code class="language-shell">$ !python models/export.py --weights yolov5s.pt --img 640 --batch 1  # export at 640x640 with batch size 1
-</code></pre>
-<ul>
-<li>you can see more about model export on this thread <a href="https://github.com/ultralytics/yolov5/issues/251">:link:</a></li>
-<li>About <strong>pytorch</strong> to <strong>tensorflow</strong> model conversion <a href="https://github.com/ultralytics/yolov5/pull/1127">:link:</a></li>
-</ul>
-<h2 id="inference">inference</h2>
-<p>for inference on batch of images:</p>
-<pre><code class="language-shell">!python detect.py --source data/images --weights yolov5s.pt --conf 0.25
-</code></pre>
-<p>for video inference:</p>
-<pre><code class="language-shell">!python detect.py --source file.mp4 --weights yolov5s.pt --conf 0.25
-</code></pre>
-<aside aria-label="warning" class="note warning">
-  <div>
-    <svg class="sign" aria-hidden="true" viewBox="0 0 48.430474 41.646302" focusable="false">
-      <use xlink:href="#warning"></use>
-    </svg>
-    Don't forget to save the model in google drive
-  </div>
-</aside>
 
-<p><center><img src="https://live.staticflickr.com/65535/50750866877_6fdf730351_d.jpg" alt="tiger" style="zoom:130%;" /></center></p>
-<h2 id="final-thoughts">final thoughts</h2>
-<p>Successfully trained the model, now looking forward to use it on edge device like raspberry pi. Last november PyTorch <a href="https://pytorch.org/blog/prototype-features-now-available-apis-for-hardware-accelerated-mobile-and-arm64-builds/">announced</a> their officials builds for Arm64 devices. (nightly)</p>
-<div class="expandable-section">
-  
-    <h1>
-  
-    
-    
-    
-    
-    
-    <button aria-expanded="false" data-expands="js-expandable-4611da5802b2eac919debf40843eefed">
-      <span class="expandable-label">Installing PyTorch on raspberry(arm64):</span>
-      <svg aria-hidden="true" focusable="false" viewBox="0 0 70.866142 70.866141">
-        <g transform="translate(0 -981.5)">
-          <rect style="stroke-width:0;fill:currentColor" ry="5" height="60" width="9.8985" y="987.36" x="30.051" class="up-strut" />
-          <rect style="stroke-width:0;fill:currentColor" ry="5" height="10" width="60" y="1012.4" x="5"/>
-        </g>
-      </svg>
-    </button>
-  
-    </h1>
-  
-  <div id="js-expandable-4611da5802b2eac919debf40843eefed" hidden>
-    <pre><code class="language-shell">$ pip install numpy
-$ pip install --pre torch torchvision torchaudio -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html
-</code></pre>
 
-  </div>
-</div>
 
+
+
+
+
+
+  
+
+
+<figure role="group" aria-describedby="caption-b6ee3a6a8b50d77ddcf64979e89aeb51">
+  <a href="/eye-gan/im.png" class="img-link">
+    <img src="/eye-gan/im_hu0f324bc9909441fe295b6ed3539382b6_427892_500x0_resize_box_2.png">
+  </a>
+  <figcaption id="caption-b6ee3a6a8b50d77ddcf64979e89aeb51">
+    resulted image
+  </figcaption>
+</figure>
+
+<p>The model not entirely removes the glass but make less visible. May be changing network architectures or changing training procedure will improve it, I think so.</p>
+<h2 id="conclusion">conclusion</h2>
+<p>You can see some what distorted image outcome, and the glass is less visible, not entirely removed. This removal of eye glasses can be applied into different applications like improving face recognition and  for virtual makeup.</p>
+<p>Cycle-gan model can be run on CPU but it is memory intensive process, not suitable for low-end devices. My method is somewhat newbie style, I know it is need to be improved in many ways. And I welcome suggestions for improving the model.</p>
 
   </main>
   <div id="disqus-container">

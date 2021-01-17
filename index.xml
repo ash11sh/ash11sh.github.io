@@ -8,6 +8,16 @@
     <language>en-us</language>
     <lastBuildDate>Mon, 26 Jun 2017 18:27:58 +0100</lastBuildDate><atom:link href="https://ash11sh.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Removing Eye-glasses from face</title>
+      <link>https://ash11sh.github.io/eye-gan/</link>
+      <pubDate>Sun, 17 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ash11sh.github.io/eye-gan/</guid>
+      <description>intro I recently tried to implement code for trying out glass frames like snapchat filter. Used OpenCV and numpy for this process of overlaying frame. Result came out good for frontal posed face.
+ demo - overlaying frame   But you need to give input image without wearing glasses to get better results. I tried giving an image of person with wearing glasses and it came out like this.</description>
+    </item>
+    
+    <item>
       <title>Yolov5 training with Custom Dataset</title>
       <link>https://ash11sh.github.io/yolov5/</link>
       <pubDate>Wed, 23 Dec 2020 00:00:00 +0000</pubDate>
